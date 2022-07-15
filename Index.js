@@ -1,54 +1,81 @@
+// state - count:0
+// action - increment, decrement, reset
+// reducer
+// store
+
+const { createStore } = require("redux");
+
+//CONSTANTS
 const INCREMENT = "INCREMENT";
 const DECREMENT = "DECREMENT";
-const ADD_USER = "ADD_USER";
-//state
+const RESET = "RESET";
+
+//STATE
 const initialCounterState = {
   count: 0,
 };
-const initialUsersState = {
-  users: [
-    {
-      name: "fahim muntasir",
-    },
-  ],
-};
 
-//action is object is's has two value - type, payload
-// INCREMENT COUNTER
-const incrementCounter = () => {
+//ACTIONS
+const incrementCounterAction = () => {
   return {
     type: INCREMENT,
   };
 };
-// DECREMENT COUNTER
-const decrementCounter = () => {
+const decrementCounterAction = () => {
   return {
     type: DECREMENT,
   };
 };
-// ADD USER
-const addUser = () => {
+const resetAction = () => {
   return {
-    type: ADD_USER,
-    payload: { user: "hero alom" },
+    type: RESET,
   };
 };
 
-// Create reducer for counter
+//REDUCER
+
 const counterReducer = (state = initialCounterState, action) => {
   switch (action.type) {
     case INCREMENT:
       return {
         ...state,
-        count: state.count - 1,
+        count: state.count + 1,
       };
     case DECREMENT:
       return {
         ...state,
-        count: state.count + 1,
+        count: state.count - 1,
+      };
+    case RESET:
+      return {
+        ...state,
+        count: 0,
       };
 
     default:
       state;
   }
 };
+
+//STORE
+
+const store = createStore(counterReducer);
+
+// SUBSCRIBE
+
+store.subscribe(() => {
+  console.log(store.getState());
+});
+
+// dispatch actions
+store.dispatch(incrementCounterAction())
+store.dispatch(incrementCounterAction())
+store.dispatch(incrementCounterAction())
+store.dispatch(incrementCounterAction())
+store.dispatch(incrementCounterAction())
+store.dispatch(incrementCounterAction())
+store.dispatch(decrementCounterAction())
+store.dispatch(decrementCounterAction())
+store.dispatch(decrementCounterAction())
+store.dispatch(resetAction())
+store.dispatch(incrementCounterAction())
