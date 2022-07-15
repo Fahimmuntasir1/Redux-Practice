@@ -6,19 +6,35 @@
 const { createStore } = require("redux");
 
 //CONSTANTS
+
+const ADD_USER = "ADD_USER";
 const INCREMENT = "INCREMENT";
+const INCREMENT_BY_VALUE = "INCREMENT_BY_VALUE";
 const DECREMENT = "DECREMENT";
 const RESET = "RESET";
 
 //STATE
 const initialCounterState = {
+  users: [],
   count: 0,
 };
 
 //ACTIONS
+const addUser = (user) => {
+  return {
+    type: ADD_USER,
+    payload: user,
+  };
+};
 const incrementCounterAction = () => {
   return {
     type: INCREMENT,
+  };
+};
+const incrementCounterByValue = (value) => {
+  return {
+    type: INCREMENT_BY_VALUE,
+    payload: value,
   };
 };
 const decrementCounterAction = () => {
@@ -36,10 +52,20 @@ const resetAction = () => {
 
 const counterReducer = (state = initialCounterState, action) => {
   switch (action.type) {
+    case ADD_USER:
+      return {
+        users: [...state.users, action.payload],
+        count: state.count + 1,
+      };
     case INCREMENT:
       return {
         ...state,
         count: state.count + 1,
+      };
+    case INCREMENT_BY_VALUE:
+      return {
+        ...state,
+        count: state.count + action.payload,
       };
     case DECREMENT:
       return {
@@ -67,15 +93,19 @@ store.subscribe(() => {
   console.log(store.getState());
 });
 
-// dispatch actions
-store.dispatch(incrementCounterAction())
-store.dispatch(incrementCounterAction())
-store.dispatch(incrementCounterAction())
-store.dispatch(incrementCounterAction())
-store.dispatch(incrementCounterAction())
-store.dispatch(incrementCounterAction())
-store.dispatch(decrementCounterAction())
-store.dispatch(decrementCounterAction())
-store.dispatch(decrementCounterAction())
-store.dispatch(resetAction())
-store.dispatch(incrementCounterAction())
+// DISPATCH ACTIONS
+// store.dispatch(incrementCounterAction());
+// store.dispatch(incrementCounterAction());
+// store.dispatch(incrementCounterAction());
+// store.dispatch(incrementCounterAction());
+// store.dispatch(incrementCounterAction());
+// store.dispatch(incrementCounterAction());
+// store.dispatch(decrementCounterAction());
+// store.dispatch(decrementCounterAction());
+// store.dispatch(decrementCounterAction());
+// store.dispatch(resetAction());
+// store.dispatch(incrementCounterAction());
+// store.dispatch(incrementCounterByValue(3));
+store.dispatch(addUser("Fahim"));
+store.dispatch(addUser("Loves"));
+store.dispatch(addUser("dash dash"));
