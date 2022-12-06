@@ -1,10 +1,11 @@
 import "./App.css";
-import Counter from "./Components/Counter/Counter";
+import LongForm from "./Components/pages/LongForm";
 
 function App() {
   return (
     <div>
-      <Counter />
+      {/* <Counter /> */}
+      <LongForm />
     </div>
   );
 }
