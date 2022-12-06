@@ -1,7 +1,12 @@
+const { default: axios } = require("axios");
+const { createStore, applyMiddleware } = require("redux");
+const thunk = require("redux-Thunk").default;
+
 // constants
 const GET_TODOS_REQUEST = "GET_TODOS_REQUEST";
 const GET_TODOS_SUCCESS = "GET_TODOS_SUCCESS";
 const GET_TODOS_ERROR = "GET_TODOS_ERROR";
+const API_URL = "https://jsonplaceholder.typicode.com/users";
 
 //state
 const initialTodoState = {
@@ -58,10 +63,22 @@ const todoReducer = (state = initialTodoState, action) => {
 };
 
 // async action create
-const fetchData = () => {};
+const fetchData = () => {
+  return (dispatch) => {
+    dispatch(getTodosRequest);
+    axios
+      .get(API_URL)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
+};
 
 //store
-const store = createStore(todoReducer);
+const store = createStore(todoReducer, applyMiddleware(thunk));
 store.subscribe(() => {
   console.log(store.getState());
 });
