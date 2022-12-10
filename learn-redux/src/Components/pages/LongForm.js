@@ -1,11 +1,45 @@
-import React from "react";
+import React, { useReducer } from "react";
 
 const LongForm = () => {
+  const initialState = {
+    firstName: "",
+    lastName: "",
+    email: "",
+    gender: "",
+    education: "",
+    quantity: 0,
+    feedback: "",
+    term: false,
+  };
+
+  const reducer = (state, action) => {
+    console.log(action);
+    if (action.type === "ÏNPUT") {
+      return {
+        ...state,
+        [action.payload.name]: action.payload.value,
+      };
+    }
+  };
+  const submit = (event) => {
+    event.preventDefault();
+    console.log(state);
+  };
+
+  const [state, dispatch] = useReducer(reducer, initialState);
+
   return (
-    <div>
+    <div
+      style={{
+        color: "red",
+        textAlign: "left",
+        width: "50%",
+        margin: "20px auto",
+      }}
+    >
       <form
         className="shadow-lg p-10 rounded-md flex flex-wrap gap-3 max-w-3xl justify-between"
-        // onSubmit={submit}
+        onSubmit={submit}
       >
         <div className="flex flex-col w-full max-w-xs">
           <label className="mb-2" htmlFor="firstName">
@@ -15,12 +49,15 @@ const LongForm = () => {
             type="text"
             name="firstName"
             id="firstName"
-            // onBlur={(e) =>
-            //   dispatch({
-            //     type: "INPUT",
-            //     payload: { name: e.target.name, value: e.target.value },
-            //   })
-            // }
+            onBlur={(e) => {
+              dispatch({
+                type: "INPUT",
+                payload: {
+                  name: e.target.name,
+                  value: e.target.value,
+                },
+              });
+            }}
           />
         </div>
         <div className="flex flex-col w-full max-w-xs">
@@ -31,12 +68,12 @@ const LongForm = () => {
             type="text"
             name="lastName"
             id="lastName"
-            // onBlur={(e) =>
-            //   dispatch({
-            //     type: "INPUT",
-            //     payload: { name: e.target.name, value: e.target.value },
-            //   })
-            // }
+            onBlur={(e) => {
+              dispatch({
+                type: "INPUT",
+                payload: { name: e.target.name, value: e.target.value },
+              });
+            }}
           />
         </div>
         <div className="flex flex-col w-full max-w-xs">
@@ -133,7 +170,10 @@ const LongForm = () => {
         </div>
         <div className="flex flex-col w-full max-w-xs">
           <label className="mb-3">Number of PCs</label>
-          <div className="flex justify-between items-center gap-2 ">
+          <div
+            style={{ display: "flex" }}
+            className="flex justify-between items-center gap-2 "
+          >
             <button className="bg-indigo-500 text-lg text-white rounded h-10 w-10 ">
               -
             </button>
