@@ -24,6 +24,16 @@ const LongForm = () => {
           ...state,
           term: !state.term,
         };
+      case "INCREMENT":
+        return {
+          ...state,
+          quantity: state.quantity + 1,
+        };
+      case "DECREMENT":
+        return {
+          ...state,
+          quantity: state.quantity - 1,
+        };
       default:
         return state;
     }
@@ -164,11 +174,11 @@ const LongForm = () => {
             style={{ display: "flex" }}
             className="flex justify-between items-center gap-2 "
           >
-            <button>-</button>
+            <button onClick={() => dispatch({ type: "DECREMENT" })}>-</button>
             <div>
-              <span>0</span>
+              <span>{state.quantity}</span>
             </div>
-            <button>+</button>
+            <button onClick={() => dispatch({ type: "INCREMENT" })}>+</button>
           </div>
         </div>
         <div>
